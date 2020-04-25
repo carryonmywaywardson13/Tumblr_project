@@ -1,4 +1,5 @@
 import datetime
+from wtforms import fields, widgets
 from flask import Flask, render_template, request, make_response, session, jsonify
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.exceptions import abort
@@ -7,7 +8,7 @@ from data import db_session, add_jobs
 from data.LoginForm import LoginForm
 from data.NewsForm import NewsForm
 from data.RegisterForm import RegisterForm
-
+from data.photos import Photos
 from data.news import News
 
 from data.users import User
@@ -18,6 +19,18 @@ app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
+class WysiwygWidget(widgets.TextArea):
+    def __call__(self, field, **kwargs):
+        if kwargs.get('class'):
+            kwargs['class'] += ' wysiwyg'
+        else:
+            kwargs.setdefault('class', 'wysiwyg')
+        return super(WysiwygWidget, self).__call__(field, **kwargs)
+
+
+class WysiwygField(fields.TextAreaField):
+    widget = WysiwygWidget()
 
 def main():
     db_session.global_init("db/blogs.sqlite")
@@ -189,7 +202,9 @@ def news_delete(id):
 app.route('/new_photos/<int:id>', methods=['GET', 'POST'])
 def new_photos():
     session = db_session.create_session()
-    photo = ''
+    photo = session.query(Photos).filter(Photos.id == id,
+                                      Photos.user == current_user).first()
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
