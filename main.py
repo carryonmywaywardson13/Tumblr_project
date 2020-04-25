@@ -1,5 +1,5 @@
 import datetime
-from wtforms import fields, widgets
+
 from flask import Flask, render_template, request, make_response, session, jsonify
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.exceptions import abort
@@ -20,17 +20,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-class WysiwygWidget(widgets.TextArea):
-    def __call__(self, field, **kwargs):
-        if kwargs.get('class'):
-            kwargs['class'] += ' wysiwyg'
-        else:
-            kwargs.setdefault('class', 'wysiwyg')
-        return super(WysiwygWidget, self).__call__(field, **kwargs)
-
-
-class WysiwygField(fields.TextAreaField):
-    widget = WysiwygWidget()
 
 def main():
     db_session.global_init("db/blogs.sqlite")
