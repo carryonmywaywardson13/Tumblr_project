@@ -20,7 +20,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-
 def main():
     db_session.global_init("db/blogs.sqlite")
     app.register_blueprint(add_jobs.blueprint)
