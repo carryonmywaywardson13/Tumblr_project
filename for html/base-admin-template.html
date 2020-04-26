@@ -1,0 +1,14 @@
+{% extends 'admin/base.html' %}
+
+{% block head_tail %}
+    {{ super() }}
+		//-> ваши стили и дополнительная информация которую нужно разместить в <head/>
+{% endblock %}
+
+
+{% block tail %}
+    {{ super() }}
+
+    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+{% endblock %}
