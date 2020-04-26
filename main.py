@@ -1,5 +1,5 @@
 import datetime
-
+import random
 from flask import Flask, render_template, request, make_response, session, jsonify
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.exceptions import abort
@@ -188,12 +188,32 @@ def news_delete(id):
         abort(404)
     return redirect('/')
 
-app.route('/new_photos/<int:id>', methods=['GET', 'POST'])
-def new_photos():
-    session = db_session.create_session()
-    photo = session.query(Photos).filter(Photos.id == id,
-                                      Photos.user == current_user).first()
+@app.route('/admin/upload-image', methods=['POST'])
+def upload_image_post():
+    item = request.files.get('upload')
+    hash = random.getrandbits(128)
+    ext = item.filename.split('.')[-1]
+    path = '%s.%s' % (hash, ext)
 
+    item.save(
+		# STORAGE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'app/static/storage/')
+        os.path.join(app.config['STORAGE'], path)
+    )
+
+    storage = StorageModel(
+        name=item.filename,
+        type=ext,
+        path=path,
+    )
+
+    db.session.add(storage)
+    db.session.commit()
+
+    result = result_data.replace('{num}', request.args.get('CKEditorFuncNum'))
+    result = result.replace('{path}', '/static/storage/' + storage.path)
+    result = result.replace('{error}', '')
+
+    return result
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
