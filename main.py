@@ -8,7 +8,7 @@ from data import db_session, add_jobs
 from data.LoginForm import LoginForm
 from data.NewsForm import NewsForm
 from data.RegisterForm import RegisterForm
-from data.photos import Photos
+
 from data.news import News
 
 from data.users import User
