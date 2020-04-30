@@ -12,7 +12,7 @@ from werkzeug.utils import redirect
 from data import db_session, add_jobs
 from data.LoginForm import LoginForm
 from data.NewsForm import NewsForm
-from dataport.RegisterForm import RegisterForm
+from data.RegisterForm import RegisterForm
 
 
 from data.news import News
