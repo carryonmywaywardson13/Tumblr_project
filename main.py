@@ -1,13 +1,19 @@
 import datetime
+import os
 import random
 from flask import Flask, render_template, request, make_response, session, jsonify
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from sqlalchemy.testing import db
+
+from data.StorageModel import StorageModel
+from data.upload_image import result_data
+#from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from data import db_session, add_jobs
 from data.LoginForm import LoginForm
 from data.NewsForm import NewsForm
 from dataport.RegisterForm import RegisterForm
+
 
 from data.news import News
 
