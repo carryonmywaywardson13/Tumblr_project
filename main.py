@@ -186,6 +186,8 @@ def news_delete(id):
     session = db_session.create_session()
     news = session.query(News).filter(News.id == id,
                                       News.user == current_user).first()
+    likes = GenericRelation(Like)
+
     if news:
         session.delete(news)
         session.commit()
