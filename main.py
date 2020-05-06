@@ -3,11 +3,12 @@ import os
 import random
 from flask import Flask, render_template, request, make_response, session, jsonify
 from sqlalchemy.testing import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager
 from data.StorageModel import StorageModel
 from data.upload_image import result_data
 # from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-import flask_login
+#import flask_login
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from data import db_session, add_jobs
@@ -187,7 +188,7 @@ def news_delete(id):
     session = db_session.create_session()
     news = session.query(News).filter(News.id == id,
                                       News.user == current_user).first()
-    likes = GenericRelation(Like)
+    №likes = GenericRelation(Like)
 
     if news:
         session.delete(news)
@@ -210,7 +211,7 @@ def upload_image_post():
 
     storage = StorageModel(
         name=item.filename,
-        type=ext,
+        type=text,
         path=path,
     )
 
@@ -225,6 +226,8 @@ def upload_image_post():
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
 
 
 if __name__ == '__main__':
