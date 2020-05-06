@@ -4,10 +4,9 @@ import random
 from flask import Flask, render_template, request, make_response, session, jsonify
 from sqlalchemy.testing import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager
 from data.StorageModel import StorageModel
 from data.upload_image import result_data
-# from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 #import flask_login
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
