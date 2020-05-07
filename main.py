@@ -226,8 +226,22 @@ def upload_image_post():
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+# для работы с куки
+@app.route('/cookie/')
+def cookie():
+    if not request.cookies.get('foo'):
+	res = make_response("Setting a cookie")
+	res.set_cookie('foo', 'bar', max_age=60*60*24*365*2)
+    else:
+	res = make_response("Value of cookie foo is {}".format(request.cookies.get('foo')))
+    return res
 
 
+@app.route('/delete-cookie/')
+def delete_cookie():
+    res = make_response("Cookie Removed")
+    res.set_cookie('foo', 'bar', max_age=0)
+    return res
 
 if __name__ == '__main__':
     main()
