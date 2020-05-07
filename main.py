@@ -32,14 +32,6 @@ def main():
     app.register_blueprint(add_jobs.blueprint)
 
     session = db_session.create_session()
-    # news = News(title='Первая новость', content='Privet!', user_id=1, is_private=False)
-    # session.add(news)
-    # user = session.query(User).filter(User.id == 1).first()
-    # news = News(title='Первый сиквел-новости', content='Снова привет!', user=user, is_private=False)
-    # session.add(news)
-    # news = News(title='Top secret', content='Summer is coming!', is_private=True)
-    # user.news.append(news)
-    # session.commit()
     app.run()
 
 
